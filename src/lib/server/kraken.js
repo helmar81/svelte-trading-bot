@@ -1,7 +1,10 @@
 // src/lib/server/kraken.js
 import crypto from 'crypto';
-// @ts-ignore
-import { KRAKEN_API_KEY, KRAKEN_API_SECRET } from '$env/static/private';
+const { KRAKEN_API_KEY, KRAKEN_API_SECRET } = process.env;
+
+// Access variables safely:
+const krakenApiKey = KRAKEN_API_KEY || '';
+const krakenApiSecret = KRAKEN_API_SECRET || '';
 
 const KRAKEN_BASE_URL = 'https://api.kraken.com';
 

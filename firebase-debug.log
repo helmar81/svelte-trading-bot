@@ -1,0 +1,99 @@
+[debug] [2026-10-08T19:47:19.498Z] ----------------------------------------------------------------------
+[debug] [2026-10-08T19:47:19.501Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\promp\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2026-10-08T19:47:19.501Z] CLI Version:   15.33.0
+[debug] [2026-10-08T19:47:19.501Z] Platform:      win32
+[debug] [2026-10-08T19:47:19.502Z] Node Version:  v22.20.0
+[debug] [2026-10-08T19:47:19.502Z] Detected Agent: unknown
+[debug] [2026-10-08T19:47:19.502Z] Time:          Thu Oct 08 2026 21:47:19 GMT+0200 (Central European Summer Time)
+[debug] [2026-10-08T19:47:19.502Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-10-08T19:47:20.476Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-10-08T19:47:20.476Z] > authorizing via signed-in user (helmar81@gmail.com)
+[debug] [2026-10-08T19:47:20.476Z] [iam] checking project svelte-trading-bot for permissions ["firebase.projects.get"]
+[debug] [2026-10-08T19:47:20.478Z] Checked if tokens are valid: true, expires at: 1791491255890
+[debug] [2026-10-08T19:47:20.478Z] Checked if tokens are valid: true, expires at: 1791491255890
+[debug] [2026-10-08T19:47:20.479Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/svelte-trading-bot:testIamPermissions [none]
+[debug] [2026-10-08T19:47:20.479Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/svelte-trading-bot:testIamPermissions  x-goog-user-project=svelte-trading-bot
+[debug] [2026-10-08T19:47:20.479Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/svelte-trading-bot:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2026-10-08T19:47:20.749Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/svelte-trading-bot:testIamPermissions 200
+[debug] [2026-10-08T19:47:20.749Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/svelte-trading-bot:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2026-10-08T19:47:20.752Z] Checked if tokens are valid: true, expires at: 1791491255890
+[debug] [2026-10-08T19:47:20.752Z] Checked if tokens are valid: true, expires at: 1791491255890
+[debug] [2026-10-08T19:47:20.752Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/svelte-trading-bot [none]
+[debug] [2026-10-08T19:47:21.267Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/svelte-trading-bot 200
+[debug] [2026-10-08T19:47:21.267Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/svelte-trading-bot {"projectNumber":"988337181074","projectId":"svelte-trading-bot","lifecycleState":"ACTIVE","name":"svelte-trading-bot","labels":{"firebase":"enabled","firebase-core":"disabled"},"createTime":"2026-10-08T19:38:17.703Z"}
+[info] 
+[info] === Serving from 'C:\Users\promp\Documents\svelte-trading-bot'...
+[info] 
+[debug] [2026-10-08T19:47:21.271Z] Checked if tokens are valid: true, expires at: 1791491255890
+[debug] [2026-10-08T19:47:21.271Z] Checked if tokens are valid: true, expires at: 1791491255890
+[debug] [2026-10-08T19:47:21.271Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/svelte-trading-bot/sites 
+[debug] [2026-10-08T19:47:22.667Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/svelte-trading-bot/sites 200
+[debug] [2026-10-08T19:47:22.667Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/svelte-trading-bot/sites {"sites":[{"name":"projects/svelte-trading-bot/sites/svelte-trading-bot","defaultUrl":"https://svelte-trading-bot.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2026-10-08T19:47:22.667Z] Checked if tokens are valid: true, expires at: 1791491255890
+[debug] [2026-10-08T19:47:22.667Z] Checked if tokens are valid: true, expires at: 1791491255890
+[debug] [2026-10-08T19:47:22.667Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/svelte-trading-bot/webApps/-/config [none]
+[debug] [2026-10-08T19:47:23.188Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/svelte-trading-bot/webApps/-/config 200
+[debug] [2026-10-08T19:47:23.188Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/svelte-trading-bot/webApps/-/config {"projectId":"svelte-trading-bot","storageBucket":"svelte-trading-bot.firebasestorage.app","apiKey":"AIzaSyA39bVnOCP-YqteU6PwjuagMKYA5E2XQ6c","authDomain":"svelte-trading-bot.firebaseapp.com","messagingSenderId":"988337181074","projectNumber":"988337181074","version":"2"}
+[debug] [2026-10-08T19:47:23.200Z] Checked if tokens are valid: true, expires at: 1791491255890
+[debug] [2026-10-08T19:47:23.200Z] Checked if tokens are valid: true, expires at: 1791491255890
+[debug] [2026-10-08T19:47:23.200Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/svelte-trading-bot [none]
+[debug] [2026-10-08T19:47:23.384Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/svelte-trading-bot 200
+[debug] [2026-10-08T19:47:23.384Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/svelte-trading-bot {"projectId":"svelte-trading-bot","projectNumber":"988337181074","displayName":"svelte-trading-bot","name":"projects/svelte-trading-bot","resources":{"hostingSite":"svelte-trading-bot"},"state":"ACTIVE","labels":{"firebase":"enabled"},"etag":"1_e4910871-a708-49de-971f-9990ca0d9a1e"}
+[info] i  hosting[svelte-trading-bot]: Serving hosting files from: public {"metadata":{"emulator":{"name":"hosting"},"message":"Serving hosting files from: \u001b[1mpublic\u001b[22m"}}
+[info] +  hosting[svelte-trading-bot]: Local server: http://localhost:5000 {"metadata":{"emulator":{"name":"hosting"},"message":"Local server: \u001b[4m\u001b[1mhttp://localhost:5000\u001b[22m\u001b[24m"}}
+[info] i  hosting: ::1 - - [08/Oct/2026:19:48:01 +0000] "GET / HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.141.0 Chrome/150.0.7871.250 Electron/43.7.7 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"::1 - - [08/Oct/2026:19:48:01 +0000] \"GET / HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.141.0 Chrome/150.0.7871.250 Electron/43.7.7 Safari/537.36\""}}
+[info] i  hosting: ::1 - - [08/Oct/2026:19:48:01 +0000] "GET /manifest.json HTTP/1.1" 304 - "http://localhost:5000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.141.0 Chrome/150.0.7871.250 Electron/43.7.7 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"::1 - - [08/Oct/2026:19:48:01 +0000] \"GET /manifest.json HTTP/1.1\" 304 - \"http://localhost:5000/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.141.0 Chrome/150.0.7871.250 Electron/43.7.7 Safari/537.36\""}}
+[info] i  hosting: ::1 - - [08/Oct/2026:19:48:03 +0000] "GET /sw.js HTTP/1.1" 304 - "http://localhost:5000/sw.js" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.141.0 Chrome/150.0.7871.250 Electron/43.7.7 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"::1 - - [08/Oct/2026:19:48:03 +0000] \"GET /sw.js HTTP/1.1\" 304 - \"http://localhost:5000/sw.js\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.141.0 Chrome/150.0.7871.250 Electron/43.7.7 Safari/537.36\""}}
+[debug] [2026-10-09T09:26:21.216Z] ----------------------------------------------------------------------
+[debug] [2026-10-09T09:26:21.219Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\promp\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2026-10-09T09:26:21.219Z] CLI Version:   15.33.0
+[debug] [2026-10-09T09:26:21.219Z] Platform:      win32
+[debug] [2026-10-09T09:26:21.220Z] Node Version:  v22.20.0
+[debug] [2026-10-09T09:26:21.220Z] Detected Agent: unknown
+[debug] [2026-10-09T09:26:21.220Z] Time:          Fri Oct 09 2026 11:26:21 GMT+0200 (Central European Summer Time)
+[debug] [2026-10-09T09:26:21.220Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-10-09T09:26:39.391Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-10-09T09:26:39.391Z] > authorizing via signed-in user (helmar81@gmail.com)
+[debug] [2026-10-09T09:26:39.391Z] [iam] checking project svelte-trading-bot for permissions ["firebase.projects.get"]
+[debug] [2026-10-09T09:26:39.393Z] Checked if tokens are valid: false, expires at: 1791491255890
+[debug] [2026-10-09T09:26:39.393Z] Checked if tokens are valid: false, expires at: 1791491255890
+[debug] [2026-10-09T09:26:39.393Z] > refreshing access token with scopes: []
+[debug] [2026-10-09T09:26:39.396Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-10-09T09:26:39.396Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-10-09T09:26:39.553Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-10-09T09:26:39.553Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-10-09T09:26:39.568Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/svelte-trading-bot:testIamPermissions [none]
+[debug] [2026-10-09T09:26:39.569Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/svelte-trading-bot:testIamPermissions  x-goog-user-project=svelte-trading-bot
+[debug] [2026-10-09T09:26:39.569Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/svelte-trading-bot:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2026-10-09T09:26:40.313Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/svelte-trading-bot:testIamPermissions 200
+[debug] [2026-10-09T09:26:40.313Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/svelte-trading-bot:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2026-10-09T09:26:40.314Z] Checked if tokens are valid: true, expires at: 1791541598553
+[debug] [2026-10-09T09:26:40.314Z] Checked if tokens are valid: true, expires at: 1791541598553
+[debug] [2026-10-09T09:26:40.315Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/svelte-trading-bot [none]
+[debug] [2026-10-09T09:26:40.517Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/svelte-trading-bot 200
+[debug] [2026-10-09T09:26:40.517Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/svelte-trading-bot {"projectNumber":"988337181074","projectId":"svelte-trading-bot","lifecycleState":"ACTIVE","name":"svelte-trading-bot","labels":{"firebase":"enabled","firebase-core":"disabled"},"createTime":"2026-10-08T19:38:17.703Z"}
+[info] 
+[info] === Serving from 'C:\Users\promp\Documents\svelte-trading-bot'...
+[info] 
+[debug] [2026-10-09T09:26:40.521Z] Checked if tokens are valid: true, expires at: 1791541598553
+[debug] [2026-10-09T09:26:40.521Z] Checked if tokens are valid: true, expires at: 1791541598553
+[debug] [2026-10-09T09:26:40.521Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/svelte-trading-bot/sites 
+[debug] [2026-10-09T09:26:41.632Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/svelte-trading-bot/sites 200
+[debug] [2026-10-09T09:26:41.632Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/svelte-trading-bot/sites {"sites":[{"name":"projects/svelte-trading-bot/sites/svelte-trading-bot","defaultUrl":"https://svelte-trading-bot.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2026-10-09T09:26:41.633Z] Checked if tokens are valid: true, expires at: 1791541598553
+[debug] [2026-10-09T09:26:41.633Z] Checked if tokens are valid: true, expires at: 1791541598553
+[debug] [2026-10-09T09:26:41.633Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/svelte-trading-bot/webApps/-/config [none]
+[debug] [2026-10-09T09:26:42.300Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/svelte-trading-bot/webApps/-/config 200
+[debug] [2026-10-09T09:26:42.300Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/svelte-trading-bot/webApps/-/config {"projectId":"svelte-trading-bot","storageBucket":"svelte-trading-bot.firebasestorage.app","apiKey":"AIzaSyA39bVnOCP-YqteU6PwjuagMKYA5E2XQ6c","authDomain":"svelte-trading-bot.firebaseapp.com","messagingSenderId":"988337181074","projectNumber":"988337181074","version":"2"}
+[debug] [2026-10-09T09:26:42.324Z] Checked if tokens are valid: true, expires at: 1791541598553
+[debug] [2026-10-09T09:26:42.324Z] Checked if tokens are valid: true, expires at: 1791541598553
+[debug] [2026-10-09T09:26:42.324Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/svelte-trading-bot [none]
+[debug] [2026-10-09T09:26:42.540Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/svelte-trading-bot 200
+[debug] [2026-10-09T09:26:42.540Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/svelte-trading-bot {"projectId":"svelte-trading-bot","projectNumber":"988337181074","displayName":"svelte-trading-bot","name":"projects/svelte-trading-bot","resources":{"hostingSite":"svelte-trading-bot"},"state":"ACTIVE","labels":{"firebase":"enabled"},"etag":"1_e4910871-a708-49de-971f-9990ca0d9a1e"}
+[info] i  hosting[svelte-trading-bot]: Serving hosting files from: public {"metadata":{"emulator":{"name":"hosting"},"message":"Serving hosting files from: \u001b[1mpublic\u001b[22m"}}
+[info] +  hosting[svelte-trading-bot]: Local server: http://localhost:5000 {"metadata":{"emulator":{"name":"hosting"},"message":"Local server: \u001b[4m\u001b[1mhttp://localhost:5000\u001b[22m\u001b[24m"}}
+[info] i  hosting: ::1 - - [09/Oct/2026:09:26:46 +0000] "GET / HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.141.0 Chrome/150.0.7871.250 Electron/43.7.7 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"::1 - - [09/Oct/2026:09:26:46 +0000] \"GET / HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.141.0 Chrome/150.0.7871.250 Electron/43.7.7 Safari/537.36\""}}
+[info] i  hosting: ::1 - - [09/Oct/2026:09:26:46 +0000] "GET /manifest.json HTTP/1.1" 304 - "http://localhost:5000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.141.0 Chrome/150.0.7871.250 Electron/43.7.7 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"::1 - - [09/Oct/2026:09:26:46 +0000] \"GET /manifest.json HTTP/1.1\" 304 - \"http://localhost:5000/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.141.0 Chrome/150.0.7871.250 Electron/43.7.7 Safari/537.36\""}}
+[info] i  hosting: ::1 - - [09/Oct/2026:09:26:48 +0000] "GET /sw.js HTTP/1.1" 304 - "http://localhost:5000/sw.js" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.141.0 Chrome/150.0.7871.250 Electron/43.7.7 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"::1 - - [09/Oct/2026:09:26:48 +0000] \"GET /sw.js HTTP/1.1\" 304 - \"http://localhost:5000/sw.js\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.141.0 Chrome/150.0.7871.250 Electron/43.7.7 Safari/537.36\""}}
