@@ -1,0 +1,1 @@
+import{T as e,a as t,g as n,h as r,l as i,m as a}from"../chunks/BTpo0gx2.js";var o=n(`<link rel="icon" href="/favicon.svg"/>`);function s(n,s){var c=r();t(`12qhfyh`,e=>{var t=o();a(e,t)});var l=e(c);i(l,()=>s.children),a(n,c)}export{s as component};

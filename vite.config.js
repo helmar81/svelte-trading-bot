@@ -7,10 +7,7 @@ export default defineConfig({
   plugins: [
     sveltekit({
       adapter: adapter(),
-      preprocess: vitePreprocess(),
-      alias: {
-        '$lib': 'src/lib'
-      }
+      preprocess: vitePreprocess()
     })
   ]
 });
