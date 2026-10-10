@@ -1,12 +1,28 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
+  type Analysis = {
+    signal?: string;
+    confidence?: number;
+    reasoning?: string;
+  };
+
   let btcPrice = $state<number | null>(null);
   let loading = $state(true);
   let error = $state<string | null>(null);
 
-  let analysis = $state<any>(null);
+  let analysis = $state<Analysis | null>(null);
   let analyzing = $state(false);
+
+  function getSignalClass(signal?: string) {
+    const normalized = signal?.trim().toUpperCase();
+
+    if (normalized === 'BUY' || normalized === 'LONG' || normalized === 'BULLISH') return 'long';
+    if (normalized === 'SELL' || normalized === 'SHORT' || normalized === 'BEARISH') return 'short';
+    if (normalized === 'HOLD' || normalized === 'NEUTRAL' || normalized === 'WAIT') return 'neutral';
+
+    return 'neutral';
+  }
 
   async function fetchBtcPrice() {
     try {
@@ -28,10 +44,14 @@
     try {
       const res = await fetch('/api/analyze', { method: 'POST' });
       const data = await res.json();
-      if (data.success) {
-        analysis = data.analysis;
+
+      if (data?.success && data?.analysis) {
+        analysis = data.analysis as Analysis;
+      } else {
+        analysis = null;
       }
     } catch (err) {
+      analysis = null;
       console.error(err);
     } finally {
       analyzing = false;
@@ -72,15 +92,19 @@
       <span aria-hidden="true">●</span> Available to trade
     </p>
 
-    <button class="analyze-btn" onclick={runAiAnalysis} disabled={analyzing}>
+    <button class="analyze-btn" type="button" onclick={runAiAnalysis} disabled={analyzing}>
       {analyzing ? 'Analyzing with Jev...' : 'Run Jev AI Analysis'}
     </button>
 
-    {#if analysis}
+    {#if analysis && analysis.signal}
       <div class="analysis-box">
-        <h3>Signal: <span class={analysis.signal.toLowerCase()}>{analysis.signal}</span></h3>
-        <p><strong>Confidence:</strong> {(analysis.confidence * 100).toFixed(1)}%</p>
-        <p>{analysis.reasoning}</p>
+        <h3>Signal: <span class={getSignalClass(analysis.signal)}>{analysis.signal}</span></h3>
+        {#if typeof analysis.confidence === 'number'}
+          <p><strong>Confidence:</strong> {(analysis.confidence * 100).toFixed(1)}%</p>
+        {/if}
+        {#if analysis.reasoning}
+          <p>{analysis.reasoning}</p>
+        {/if}
       </div>
     {/if}
   </section>
