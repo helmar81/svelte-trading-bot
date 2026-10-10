@@ -1,12 +1,5 @@
 // src/lib/server/jev.js
-import { KRAKEN_API_KEY, KRAKEN_API_SECRET, JEV_API_KEY } from '$app/env/private';
-
-
-
-// Access variables safely:
-const apiKey = KRAKEN_API_KEY || '';
-
-const apiSecret = KRAKEN_API_SECRET || '';
+import { env } from '$env/dynamic/private';
 
 /**
  * Analyzes BTC/USD market context using TypeSafe AI Jev
@@ -14,7 +7,7 @@ const apiSecret = KRAKEN_API_SECRET || '';
  * @returns {Promise<{ signal: 'LONG' | 'SHORT' | 'NEUTRAL'; confidence: number; reasoning: string; stopLoss: number; takeProfit: number }>}
  */
 export async function analyzeEntryWithJev(marketContext) {
-  const apiKey = JEV_API_KEY || '';
+  const apiKey = env.JEV_API_KEY || '';
 
   if (!apiKey) {
     // Mock response when JEV_API_KEY is not configured in .env
