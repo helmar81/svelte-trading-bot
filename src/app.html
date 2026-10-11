@@ -3,7 +3,40 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		%sveltekit.head%
+	
+		<meta name="description"
+		content="Learn about Lorelyn's story, goals, and aspirations. Chat with Lorelyn in a supportive, personal space" />
+	<meta name="author" content="Helmar Baechle" />
+
+	<!-- Open Graph / Facebook -->
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content="svelte-trading-bot" />
+	<meta property="og:description" content="An AI-guided trading experience" />
+	<meta property="og:image" itemprop="image" content="https://svelte-trading-bot.web.app/icon-192.png" />
+	<meta property="og:image:secure_url" content="https://svelte-trading-bot.web.app/icon-192.png" />
+	<meta property="og:image:type" content="image/png" />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
+	<meta property="og:url" content="https://svelte-trading-bot.web.app/" />
+
+	<!-- Twitter -->
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:creator" content="@helmarbaechle" />
+	<meta name="twitter:title" content="svelte-trading-bot" />
+	<meta name="twitter:description" content="An AI-guided trading experience" />
+	<meta name="twitter:image" content="https://svelte-trading-bot.web.app/icon-192.png" />
+	<meta name="twitter:url" content="https://svelte-trading-bot.web.app/" />
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-323SF9L02T"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-323SF9L02T');
+</script>
+%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">
 		<div style="display: contents">%sveltekit.body%</div>

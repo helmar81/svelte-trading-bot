@@ -71,6 +71,8 @@
       Trading <span class="title-highlight">Bot</span>
     </h1>
 
+    <img class="avatar" src="/bitcoin.png" alt="bitcoin" width="210" height="210" />
+
     <p class="tagline">An AI-guided trading experience</p>
 
     <div class="price-card">
@@ -86,14 +88,14 @@
       {/if}
     </div>
 
-    <img class="avatar" src="/bitcoin.png" alt="bitcoin" width="210" height="210" />
+    
 
-    <p class="status-badge" aria-label="Available to trade">
-      <span aria-hidden="true">●</span> Available to trade
+    <p class="status-badge" aria-label="Exchange connected">
+      <span aria-hidden="true">●</span> Exchange connected
     </p>
 
     <button class="analyze-btn" type="button" onclick={runAiAnalysis} disabled={analyzing}>
-      {analyzing ? 'Analyzing with Jev...' : 'Run Jev AI Analysis'}
+      {analyzing ? 'Analyzing with Jev...' : 'Run market analysis'}
     </button>
 
     {#if analysis && analysis.signal}
@@ -108,6 +110,42 @@
       </div>
     {/if}
   </section>
+
+
+   <aside class="ai-disclosure" aria-label="AI and risk notice">
+      <span class="disclosure-icon" aria-hidden="true">✦</span>
+
+      <p>
+        Educational market analysis only 
+        — not financial advice. Crypto assets are volatile. 
+        AI signals can be wrong; verify independently and use risk controls.
+      </p>
+
+      
+    </aside>
+
+<footer class="footer">
+
+
+
+    <p class="technology-credit">Created with SvelteKit deployed on Firebase.</p>
+
+    
+
+    <p class="creator-credit">
+      © {new Date().getFullYear()} | Built by
+      <a
+        href="https://uspekhi.web.app"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Visit USPEKHI Web Development"
+      >
+        USPEKHI
+      </a>
+    </p>
+  </footer>
+
+
 </main>
 
 <style>
@@ -184,4 +222,31 @@
   }
   .long { color: #4ade80; }
   .short { color: #f87171; }
+
+.ai-disclosure {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    width: min(100%, 860px);
+    margin: 1rem auto 0;
+    padding: 0.85rem 1rem;
+    border: 1px solid rgba(169, 223, 242, 0.14);
+    border-radius: 12px;
+    color: #b9c8dc;
+    font-size: 0.84rem;
+    line-height: 1.55;
+    text-align: left;
+    background: rgba(169, 223, 242, 0.05);
+  }
+
+  .ai-disclosure p {
+    margin: 0;
+  }
+
+  .disclosure-icon {
+    margin-top: 0.05rem;
+    color: #81e6ee;
+    font-size: 1rem;
+  }
+
 </style>
