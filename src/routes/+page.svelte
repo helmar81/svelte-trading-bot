@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import MarketSnapshot from '$lib/MarketSnapshot.svelte';
 
   type Analysis = {
     signal?: string;
@@ -8,9 +8,6 @@
   };
 
   let btcPrice = $state<number | null>(null);
-  let loading = $state(true);
-  let error = $state<string | null>(null);
-
   let analysis = $state<Analysis | null>(null);
   let analyzing = $state(false);
 
@@ -22,21 +19,6 @@
     if (normalized === 'HOLD' || normalized === 'NEUTRAL' || normalized === 'WAIT') return 'neutral';
 
     return 'neutral';
-  }
-
-  async function fetchBtcPrice() {
-    try {
-      const res = await fetch('https://api.kraken.com/0/public/Ticker?pair=XBTUSD');
-      if (!res.ok) throw new Error('Failed to fetch ticker');
-      const data = await res.json();
-      const ticker = data.result.XXBTZUSD || data.result.XBTUSD;
-      btcPrice = parseFloat(ticker.c[0]);
-      error = null;
-    } catch (err: any) {
-      error = err.message;
-    } finally {
-      loading = false;
-    }
   }
 
   async function runAiAnalysis() {
@@ -57,12 +39,6 @@
       analyzing = false;
     }
   }
-
-  onMount(() => {
-    fetchBtcPrice();
-    const interval = setInterval(fetchBtcPrice, 10000);
-    return () => clearInterval(interval);
-  });
 </script>
 
 <main class="container">
@@ -75,24 +51,7 @@
 
     <p class="tagline">An AI-guided trading experience</p>
 
-    <div class="price-card">
-      <span class="price-label">BTC / USD</span>
-      {#if loading}
-        <span class="price-value loading">Loading...</span>
-      {:else if error}
-        <span class="price-value error">Unavailable</span>
-      {:else}
-        <span class="price-value">
-          ${btcPrice?.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-        </span>
-      {/if}
-    </div>
-
-    
-
-    <p class="status-badge" aria-label="Exchange connected">
-      <span aria-hidden="true">●</span> Exchange connected
-    </p>
+    <MarketSnapshot onPriceUpdate={(p) => { btcPrice = p; }} />
 
     <button class="analyze-btn" type="button" onclick={runAiAnalysis} disabled={analyzing}>
       {analyzing ? 'Analyzing with Jev...' : 'Run market analysis'}
@@ -176,30 +135,13 @@
   }
   .title-highlight { color: #a9dff2; }
   .tagline { color: #d5dfef; margin: 0; }
-  .price-card {
-    display: flex;
-    flex-direction: column;
-    padding: 0.75rem 1.5rem;
-    background: rgba(17, 24, 39, 0.6);
-    border: 1px solid rgba(169, 223, 242, 0.2);
-    border-radius: 12px;
-  }
-  .price-label { font-size: 0.75rem; color: #94a3b8; }
-  .price-value { font-size: 1.5rem; font-weight: 700; color: #38bdf8; font-family: monospace; }
   .avatar {
-    width: 180px;
-    height: 180px;
+    width: 160px;
+    height: 160px;
     border-radius: 50%;
     border: 3px solid #28d7e5;
+    box-shadow: 0 0 20px rgba(40, 215, 229, 0.25);
   }
-  .status-badge {
-    padding: 0.4rem 0.75rem;
-    border: 1px solid rgba(169, 223, 242, 0.2);
-    border-radius: 999px;
-    color: #b9c8dc;
-    font-size: 0.84rem;
-  }
-  .status-badge span { color: #4ade80; }
   .analyze-btn {
     padding: 0.75rem 1.5rem;
     background: #0284c7;

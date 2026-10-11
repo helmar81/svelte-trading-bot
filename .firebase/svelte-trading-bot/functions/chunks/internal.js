@@ -95,10 +95,48 @@ const options = {
   service_worker_options: void 0,
   server_error_boundaries: false,
   templates: {
-    app: ({ head, body, assets, nonce, env }) => '<!doctype html>\r\n<html lang="en">\r\n	<head>\r\n		<meta charset="utf-8" />\r\n		<meta name="viewport" content="width=device-width, initial-scale=1" />\r\n		' + head + '\r\n	</head>\r\n	<body data-sveltekit-preload-data="hover">\r\n		<div style="display: contents">' + body + "</div>\r\n	</body>\r\n</html>\r\n",
+    app: ({ head, body, assets, nonce, env }) => `<!doctype html>\r
+<html lang="en">\r
+	<head>\r
+		<meta charset="utf-8" />\r
+		<meta name="viewport" content="width=device-width, initial-scale=1" />\r
+	\r
+		<meta name="description"\r
+		content="Learn about Lorelyn's story, goals, and aspirations. Chat with Lorelyn in a supportive, personal space" />\r
+	<meta name="author" content="Helmar Baechle" />\r
+\r
+	<!-- Open Graph / Facebook -->\r
+	<meta property="og:type" content="website" />\r
+	<meta property="og:title" content="svelte-trading-bot" />\r
+	<meta property="og:description" content="An AI-guided trading experience" />\r
+	<meta property="og:image" itemprop="image" content="https://svelte-trading-bot.web.app/icon-192.png" />\r
+	<meta property="og:image:secure_url" content="https://svelte-trading-bot.web.app/icon-192.png" />\r
+	<meta property="og:image:type" content="image/png" />\r
+	<meta property="og:image:width" content="1200" />\r
+	<meta property="og:image:height" content="630" />\r
+	<meta property="og:url" content="https://svelte-trading-bot.web.app/" />\r
+\r
+	<!-- Twitter -->\r
+	<meta name="twitter:card" content="summary_large_image" />\r
+	<meta name="twitter:creator" content="@helmarbaechle" />\r
+	<meta name="twitter:title" content="svelte-trading-bot" />\r
+	<meta name="twitter:description" content="An AI-guided trading experience" />\r
+	<meta name="twitter:image" content="https://svelte-trading-bot.web.app/icon-192.png" />\r
+	<meta name="twitter:url" content="https://svelte-trading-bot.web.app/" />\r
+\r
+<!-- Google tag (gtag.js) -->\r
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-323SF9L02T"><\/script>\r
+<script>\r
+  window.dataLayer = window.dataLayer || [];\r
+  function gtag(){dataLayer.push(arguments);}\r
+  gtag('js', new Date());\r
+\r
+  gtag('config', 'G-323SF9L02T');\r
+<\/script>\r
+` + head + '\r\n	</head>\r\n	<body data-sveltekit-preload-data="hover">\r\n		<div style="display: contents">' + body + "</div>\r\n	</body>\r\n</html>\r\n",
     error
   },
-  version_hash: "1t37gaj"
+  version_hash: "1kdyuky"
 };
 async function get_hooks() {
   let handle;
