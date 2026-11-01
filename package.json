@@ -24,5 +24,11 @@
 	"imports": {
 		"#lib": "./src/lib/index.js",
 		"#lib/*": "./src/lib/*"
+	},
+	"dependencies": {
+		"@google/genai": "^2.32.0",
+		"@tailwindcss/vite": "^4.3.3",
+		"firebase-functions": "^7.4.0",
+		"tailwindcss": "^4.3.3"
 	}
 }

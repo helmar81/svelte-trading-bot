@@ -7,7 +7,7 @@ import { c as assets, b as base, a as app_dir, r as relative, o as override, d a
 import * as devalue from "devalue";
 import { d as decode_params, m as make_trackable, a as disable_search, S as SCHEME, v as validate_layout_server_exports, b as validate_layout_exports, c as validate_page_server_exports, e as validate_page_exports, n as normalize_path, r as resolve, f as decode_pathname, g as validate_server_exports } from "./chunks/exports.js";
 import { b as base64_encode, t as text_encoder, g as get_relative_path } from "./chunks/utils2.js";
-import { n as noop } from "./chunks/attributes.js";
+import { n as noop } from "./chunks/index.js";
 import { p as public_env, s as set_private_env, a as set_public_env } from "./chunks/shared-server.js";
 import { parse, serialize } from "cookie";
 import * as set_cookie_parser from "set-cookie-parser";

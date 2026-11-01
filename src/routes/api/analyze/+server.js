@@ -1,6 +1,6 @@
 // src/routes/api/analyze/+server.js
 import { json } from '@sveltejs/kit';
-import { analyzeEntryWithJev } from '#lib/server/jev.js';
+import { analyzeEntryWithJev, JevConfigurationError } from '#lib/server/jev.js';
 
 export async function POST() {
   try {
@@ -35,6 +35,7 @@ export async function POST() {
   } catch (error) {
     console.error('API /api/analyze Error:', error);
     const message = error instanceof Error ? error.message : 'Unknown error';
-    return json({ success: false, error: message }, { status: 500 });
+    const status = error instanceof JevConfigurationError ? 503 : 500;
+    return json({ success: false, error: message }, { status });
   }
 }

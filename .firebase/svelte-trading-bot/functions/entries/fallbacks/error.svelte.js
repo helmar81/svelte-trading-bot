@@ -1,11 +1,10 @@
-import { n as noop, e as escape_html } from "../../chunks/attributes.js";
+import { n as noop, g as getContext, e as escape_html } from "../../chunks/index.js";
 import "clsx";
 import "../../chunks/exports.js";
 import "@sveltejs/kit/internal/server";
 import "../../chunks/root.js";
 import "@sveltejs/kit/internal";
 import "../../chunks/utils2.js";
-import { g as getContext } from "../../chunks/index.js";
 const is_legacy = noop.toString().includes("$$") || /function \w+\(\) \{\}/.test(noop.toString());
 const placeholder_url = "a:";
 if (is_legacy) {

@@ -1,24 +1,21 @@
 // src/lib/server/jev.js
 import { env } from '$env/dynamic/private';
 
+export class JevConfigurationError extends Error {
+  constructor() {
+    super('JEV_API_KEY is not configured. Add it to the server environment to run live market analysis.');
+    this.name = 'JevConfigurationError';
+  }
+}
+
 /**
  * Analyzes BTC/USD market context using TypeSafe AI Jev
  * @param {{ price: number; high: number; low: number; volume?: number }} marketContext
  * @returns {Promise<{ signal: 'LONG' | 'SHORT' | 'NEUTRAL'; confidence: number; reasoning: string; stopLoss: number; takeProfit: number }>}
  */
 export async function analyzeEntryWithJev(marketContext) {
-  const apiKey = env.JEV_API_KEY || '';
-
-  if (!apiKey) {
-    // Mock response when JEV_API_KEY is not configured in .env
-    return {
-      signal: 'LONG',
-      confidence: 0.85,
-      reasoning: 'Price holding above 24h average volume range.',
-      stopLoss: marketContext.price * 0.98,
-      takeProfit: marketContext.price * 1.05
-    };
-  }
+  const apiKey = env.JEV_API_KEY;
+  if (!apiKey) throw new JevConfigurationError();
 
   const state = `Analyze market conditions for BTC/USD:
 - Current Price: $${marketContext.price}

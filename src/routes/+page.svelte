@@ -9,6 +9,7 @@
 
   let btcPrice = $state<number | null>(null);
   let analysis = $state<Analysis | null>(null);
+  let analysisError = $state('');
   let analyzing = $state(false);
 
   function getSignalClass(signal?: string) {
@@ -23,17 +24,19 @@
 
   async function runAiAnalysis() {
     analyzing = true;
+    analysis = null;
+    analysisError = '';
     try {
       const res = await fetch('/api/analyze', { method: 'POST' });
       const data = await res.json();
 
-      if (data?.success && data?.analysis) {
-        analysis = data.analysis as Analysis;
-      } else {
-        analysis = null;
+      if (!res.ok || !data?.success || !data?.analysis) {
+        throw new Error(data?.error || 'Market analysis failed. Please try again.');
       }
+
+      analysis = data.analysis as Analysis;
     } catch (err) {
-      analysis = null;
+      analysisError = err instanceof Error ? err.message : 'Market analysis failed. Please try again.';
       console.error(err);
     } finally {
       analyzing = false;
@@ -57,6 +60,10 @@
       {analyzing ? 'Analyzing with Jev...' : 'Run market analysis'}
     </button>
 
+    {#if analysisError}
+      <p class="analysis-error" role="alert">{analysisError}</p>
+    {/if}
+
     {#if analysis && analysis.signal}
       <div class="analysis-box">
         <h3>Signal: <span class={getSignalClass(analysis.signal)}>{analysis.signal}</span></h3>
@@ -76,11 +83,10 @@
 
       <p>
         Educational market analysis only 
-        — not financial advice. Crypto assets are volatile. 
+        — not financial advice. Cryptocurrency assets are volatile. 
         AI signals can be wrong; verify independently and use risk controls.
       </p>
 
-      
     </aside>
 
 <footer class="footer">
@@ -93,14 +99,19 @@
 
     <p class="creator-credit">
       © {new Date().getFullYear()} | Built by
-      <a
-        href="https://uspekhi.web.app"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Visit USPEKHI Web Development"
-      >
-        USPEKHI
-      </a>
+      <a 
+                href="https://uspekhi.web.app" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="hover:underline text-blue-200 hover:text-blue-300"
+              >
+                <strong>USPEKHI</strong>
+              </a>
+              <br />
+              <a href="/privacy.html" target="_blank" rel="noopener noreferrer" class="hover:underline text-blue-200 hover:text-blue-300">
+                Privacy Policy
+              </a>
+
     </p>
   </footer>
 
@@ -162,33 +173,56 @@
     border-radius: 10px;
     max-width: 480px;
   }
+  .analysis-error {
+    max-width: 480px;
+    margin: 0;
+    color: #fca5a5;
+  }
   .long { color: #4ade80; }
   .short { color: #f87171; }
 
 .ai-disclosure {
     display: flex;
     align-items: flex-start;
-    gap: 0.7rem;
-    width: min(100%, 860px);
+    gap: 0.8rem;
+    width: min(100%, 680px);
     margin: 1rem auto 0;
-    padding: 0.85rem 1rem;
-    border: 1px solid rgba(169, 223, 242, 0.14);
-    border-radius: 12px;
+    padding: 0.9rem 1rem;
+    background: rgba(15, 23, 42, 0.72);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(56, 189, 248, 0.22);
+    border-radius: 20px;
+    box-shadow: 0 12px 36px -6px rgba(0, 0, 0, 0.55), 0 0 24px rgba(56, 189, 248, 0.08);
     color: #b9c8dc;
     font-size: 0.84rem;
     line-height: 1.55;
     text-align: left;
-    background: rgba(169, 223, 242, 0.05);
+    overflow: hidden;
   }
 
   .ai-disclosure p {
     margin: 0;
+    color: #c7d6ea;
   }
 
   .disclosure-icon {
-    margin-top: 0.05rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.08rem;
     color: #81e6ee;
     font-size: 1rem;
+    line-height: 1;
+    filter: drop-shadow(0 0 8px rgba(129, 230, 238, 0.38));
+  }
+
+  @media (max-width: 640px) {
+    .ai-disclosure {
+      gap: 0.6rem;
+      padding: 0.8rem 0.9rem;
+      border-radius: 16px;
+    }
   }
 
 </style>

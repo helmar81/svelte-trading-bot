@@ -1,11 +1,13 @@
-import { O as head } from "../../chunks/index.js";
+import { a5 as head } from "../../chunks/index.js";
 function _layout($$renderer, $$props) {
-  let { children } = $$props;
-  head("12qhfyh", $$renderer, ($$renderer2) => {
-    $$renderer2.push(`<link rel="icon" href="/favicon.svg"/>`);
+  $$renderer.component(($$renderer2) => {
+    let { children } = $$props;
+    head("12qhfyh", $$renderer2, ($$renderer3) => {
+      $$renderer3.push(`<link rel="icon" type="image/png" href="/icon-192.png"/> <link rel="apple-touch-icon" href="/icon-192.png"/>`);
+    });
+    children($$renderer2);
+    $$renderer2.push(`<!---->`);
   });
-  children($$renderer);
-  $$renderer.push(`<!---->`);
 }
 export {
   _layout as default

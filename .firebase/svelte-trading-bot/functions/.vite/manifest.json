@@ -11,20 +11,13 @@
       "_shared-server.js"
     ]
   },
-  "_attributes.js": {
-    "file": "chunks/attributes.js",
-    "name": "attributes"
-  },
   "_exports.js": {
     "file": "chunks/exports.js",
     "name": "exports"
   },
   "_index.js": {
     "file": "chunks/index.js",
-    "name": "index",
-    "imports": [
-      "_attributes.js"
-    ]
+    "name": "index"
   },
   "_internal.js": {
     "file": "chunks/internal.js",
@@ -39,8 +32,7 @@
     "file": "chunks/root.js",
     "name": "root",
     "imports": [
-      "_index.js",
-      "_attributes.js"
+      "_index.js"
     ]
   },
   "_server.js": {
@@ -78,11 +70,10 @@
     "src": "node_modules/@sveltejs/kit/src/runtime/components/svelte-5/error.svelte",
     "isEntry": true,
     "imports": [
-      "_attributes.js",
+      "_index.js",
       "_exports.js",
       "_root.js",
-      "_utils2.js",
-      "_index.js"
+      "_utils2.js"
     ]
   },
   "node_modules/@sveltejs/kit/src/runtime/server/index.js": {
@@ -96,7 +87,7 @@
       "_server.js",
       "_exports.js",
       "_utils2.js",
-      "_attributes.js",
+      "_index.js",
       "_shared-server.js",
       "_internal.js"
     ]
@@ -108,6 +99,9 @@
     "isEntry": true,
     "imports": [
       "_index.js"
+    ],
+    "css": [
+      "_app/immutable/assets/_layout.Mc40krhU.css"
     ]
   },
   "src/routes/+page.svelte": {
@@ -116,10 +110,10 @@
     "src": "src/routes/+page.svelte",
     "isEntry": true,
     "imports": [
-      "_attributes.js"
+      "_index.js"
     ],
     "css": [
-      "_app/immutable/assets/_page.CjFqCMz9.css"
+      "_app/immutable/assets/_page.CeLotFAi.css"
     ]
   },
   "src/routes/api/analyze/+server.js": {

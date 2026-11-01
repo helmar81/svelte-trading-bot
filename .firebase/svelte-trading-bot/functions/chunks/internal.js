@@ -91,7 +91,7 @@ const options = {
   // added lazily, via `get_hooks`
   preload_strategy: "modulepreload",
   root,
-  service_worker: false,
+  service_worker: true,
   service_worker_options: void 0,
   server_error_boundaries: false,
   templates: {
@@ -100,17 +100,21 @@ const options = {
 	<head>\r
 		<meta charset="utf-8" />\r
 		<meta name="viewport" content="width=device-width, initial-scale=1" />\r
-	\r
+		<link rel="manifest" href="/manifest.webmanifest" />\r
+		<meta name="theme-color" content="#111827" />\r
+		<link rel="icon" type="image/png" href="/icon-512.png" />\r
+		<link rel="apple-touch-icon" href="/icon-512.png" />\r
+		<title>Trading Bot - AI-Guided Trading Experience</title>\r
 		<meta name="description"\r
-		content="Learn about Lorelyn's story, goals, and aspirations. Chat with Lorelyn in a supportive, personal space" />\r
+		content="An AI-guided trading experience" />\r
 	<meta name="author" content="Helmar Baechle" />\r
 \r
 	<!-- Open Graph / Facebook -->\r
 	<meta property="og:type" content="website" />\r
-	<meta property="og:title" content="svelte-trading-bot" />\r
+	<meta property="og:title" content="Trading-Bot" />\r
 	<meta property="og:description" content="An AI-guided trading experience" />\r
-	<meta property="og:image" itemprop="image" content="https://svelte-trading-bot.web.app/icon-192.png" />\r
-	<meta property="og:image:secure_url" content="https://svelte-trading-bot.web.app/icon-192.png" />\r
+	<meta property="og:image" itemprop="image" content="https://svelte-trading-bot.web.app/icon-512.png" />\r
+	<meta property="og:image:secure_url" content="https://svelte-trading-bot.web.app/icon-512.png" />\r
 	<meta property="og:image:type" content="image/png" />\r
 	<meta property="og:image:width" content="1200" />\r
 	<meta property="og:image:height" content="630" />\r
@@ -119,9 +123,9 @@ const options = {
 	<!-- Twitter -->\r
 	<meta name="twitter:card" content="summary_large_image" />\r
 	<meta name="twitter:creator" content="@helmarbaechle" />\r
-	<meta name="twitter:title" content="svelte-trading-bot" />\r
+	<meta name="twitter:title" content="Trading-Bot" />\r
 	<meta name="twitter:description" content="An AI-guided trading experience" />\r
-	<meta name="twitter:image" content="https://svelte-trading-bot.web.app/icon-192.png" />\r
+	<meta name="twitter:image" content="https://svelte-trading-bot.web.app/icon-512.png" />\r
 	<meta name="twitter:url" content="https://svelte-trading-bot.web.app/" />\r
 \r
 <!-- Google tag (gtag.js) -->\r
@@ -136,7 +140,7 @@ const options = {
 ` + head + '\r\n	</head>\r\n	<body data-sveltekit-preload-data="hover">\r\n		<div style="display: contents">' + body + "</div>\r\n	</body>\r\n</html>\r\n",
     error
   },
-  version_hash: "1kdyuky"
+  version_hash: "xcasov"
 };
 async function get_hooks() {
   let handle;

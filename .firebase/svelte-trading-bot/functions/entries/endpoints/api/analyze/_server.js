@@ -1,16 +1,14 @@
 import { json } from "@sveltejs/kit";
 import { b as private_env } from "../../../../chunks/shared-server.js";
-async function analyzeEntryWithJev(marketContext) {
-  const apiKey = private_env.JEV_API_KEY || "";
-  if (!apiKey) {
-    return {
-      signal: "LONG",
-      confidence: 0.85,
-      reasoning: "Price holding above 24h average volume range.",
-      stopLoss: marketContext.price * 0.98,
-      takeProfit: marketContext.price * 1.05
-    };
+class JevConfigurationError extends Error {
+  constructor() {
+    super("JEV_API_KEY is not configured. Add it to the server environment to run live market analysis.");
+    this.name = "JevConfigurationError";
   }
+}
+async function analyzeEntryWithJev(marketContext) {
+  const apiKey = private_env.JEV_API_KEY;
+  if (!apiKey) throw new JevConfigurationError();
   const state = `Analyze market conditions for BTC/USD:
 - Current Price: $${marketContext.price}
 - High: $${marketContext.high}
@@ -89,7 +87,8 @@ async function POST() {
   } catch (error) {
     console.error("API /api/analyze Error:", error);
     const message = error instanceof Error ? error.message : "Unknown error";
-    return json({ success: false, error: message }, { status: 500 });
+    const status = error instanceof JevConfigurationError ? 503 : 500;
+    return json({ success: false, error: message }, { status });
   }
 }
 export {
