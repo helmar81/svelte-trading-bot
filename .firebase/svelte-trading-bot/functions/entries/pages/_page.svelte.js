@@ -44,12 +44,28 @@ function MarketSnapshot($$renderer, $$props) {
     $$renderer2.push(`<!--]--></div></div></div></div>`);
   });
 }
+function AIAnalysis($$renderer, $$props) {
+  $$renderer.component(($$renderer2) => {
+    let analyzingAgents = false;
+    $$renderer2.push(`<div class="agent-section"><button class="agent-btn" type="button"${attr("disabled", analyzingAgents, true)}>${escape_html("Run Agent Analysis")}</button> `);
+    {
+      $$renderer2.push("<!--[-1-->");
+    }
+    $$renderer2.push(`<!--]--> `);
+    {
+      $$renderer2.push("<!--[-1-->");
+    }
+    $$renderer2.push(`<!--]--></div>`);
+  });
+}
 function _page($$renderer, $$props) {
   $$renderer.component(($$renderer2) => {
     let analyzing = false;
     $$renderer2.push(`<main class="container svelte-1uha8ag"><section class="hero svelte-1uha8ag" aria-labelledby="page-title"><h1 id="page-title" class="svelte-1uha8ag">Trading <span class="title-highlight svelte-1uha8ag">Bot</span></h1> <img class="avatar svelte-1uha8ag" src="/bitcoin.png" alt="bitcoin" width="210" height="210"/> <p class="tagline svelte-1uha8ag">An AI-guided trading experience</p> `);
     MarketSnapshot($$renderer2);
     $$renderer2.push(`<!----> <button class="analyze-btn svelte-1uha8ag" type="button"${attr("disabled", analyzing, true)}>${escape_html("Run market analysis")}</button> `);
+    AIAnalysis($$renderer2);
+    $$renderer2.push(`<!----> `);
     {
       $$renderer2.push("<!--[-1-->");
     }
@@ -59,7 +75,7 @@ function _page($$renderer, $$props) {
     }
     $$renderer2.push(`<!--]--></section> <aside class="ai-disclosure svelte-1uha8ag" aria-label="AI and risk notice"><span class="disclosure-icon svelte-1uha8ag" aria-hidden="true">✦</span> <p class="svelte-1uha8ag">Educational market analysis only 
         — not financial advice. Cryptocurrency assets are volatile. 
-        AI signals can be wrong; verify independently and use risk controls.</p></aside> <footer class="footer"><p class="technology-credit">Created with SvelteKit deployed on Firebase.</p> <p class="creator-credit">© ${escape_html((/* @__PURE__ */ new Date()).getFullYear())} | Built by <a href="https://uspekhi.web.app" target="_blank" rel="noopener noreferrer" class="hover:underline text-blue-200 hover:text-blue-300"><strong>USPEKHI</strong></a> <br/> <a href="/privacy.html" target="_blank" rel="noopener noreferrer" class="hover:underline text-blue-200 hover:text-blue-300">Privacy Policy</a></p></footer></main>`);
+        AI signals can be wrong; verify independently and use risk controls.</p></aside> <footer class="footer svelte-1uha8ag"><p class="technology-credit">Created with SvelteKit deployed on Firebase.</p> <p class="creator-credit">© ${escape_html((/* @__PURE__ */ new Date()).getFullYear())} | Built by <a href="https://uspekhi.web.app" target="_blank" rel="noopener noreferrer" class="hover:underline text-blue-200 hover:text-blue-300"><strong>USPEKHI</strong></a> <br/> <a href="/privacy.html" target="_blank" rel="noopener noreferrer" class="hover:underline text-blue-200 hover:text-blue-300">Privacy Policy</a></p></footer></main>`);
   });
 }
 export {

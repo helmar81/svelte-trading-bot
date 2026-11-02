@@ -18,6 +18,17 @@ if (is_legacy) {
     status: -1,
     url: new URL(placeholder_url)
   });
+} else {
+  new class Page {
+    data = {};
+    form = null;
+    error = null;
+    params = {};
+    route = { id: null };
+    state = {};
+    status = -1;
+    url = new URL(placeholder_url);
+  }();
 }
 function context() {
   return getContext("__request__");

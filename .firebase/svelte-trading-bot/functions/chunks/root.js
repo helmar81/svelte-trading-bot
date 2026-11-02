@@ -291,7 +291,7 @@ function proxy(value) {
         }
         var s = sources.get(prop);
         var has = s !== void 0 && s.v !== UNINITIALIZED || Reflect.has(target, prop);
-        if (s !== void 0 || active_effect !== null && (!has || get_descriptor(target, prop)?.writable)) {
+        if (s !== void 0 || (active_effect !== null || active_reaction !== null) && (!has || get_descriptor(target, prop)?.writable)) {
           if (s === void 0) {
             s = with_parent(() => {
               var p = has ? proxy(target[prop]) : UNINITIALIZED;
@@ -459,11 +459,11 @@ function update_derived_status(derived2) {
     set_signal_status(derived2, MAYBE_DIRTY);
   }
 }
-function defer_effect(effect, dirty_effects, maybe_dirty_effects) {
+function defer_effect(effect, dirty_reactions) {
   if ((effect.f & DIRTY) !== 0) {
-    dirty_effects.add(effect);
-  } else if ((effect.f & MAYBE_DIRTY) !== 0) {
-    maybe_dirty_effects.add(effect);
+    dirty_reactions.set(effect, DIRTY);
+  } else if ((effect.f & MAYBE_DIRTY) !== 0 && dirty_reactions.get(effect) !== DIRTY) {
+    dirty_reactions.set(effect, MAYBE_DIRTY);
   }
   set_signal_status(effect, CLEAN);
 }
@@ -581,24 +581,24 @@ let uid = 1;
 class Batch {
   id = uid++;
   /** True as soon as `#process` was called */
-  #started = false;
+  started = false;
   linked = true;
   /** @type {Batch | null} */
-  #prev = null;
+  prev = null;
   /** @type {Batch | null} */
-  #next = null;
+  next = null;
   /** @type {Map<Effect, ReturnType<typeof deferred<any>>>} */
   async_deriveds = /* @__PURE__ */ new Map();
   /**
    * The current values of any signals that are updated in this batch.
    * Tuple format: [value, is_derived] (note: is_derived is false for deriveds, too, if they were overridden via assignment)
-   * They keys of this map are identical to `this.#previous`
+   * The keys of this map are identical to `this.previous`
    * @type {Map<Value, [any, boolean]>}
    */
   current = /* @__PURE__ */ new Map();
   /**
    * The values of any signals (sources and deriveds) that are updated in this batch _before_ those updates took place.
-   * They keys of this map are identical to `this.#current`
+   * The keys of this map are identical to `this.current`
    * @type {Map<Value, any>}
    */
   previous = /* @__PURE__ */ new Map();
@@ -646,15 +646,10 @@ class Batch {
    */
   #new_effects = [];
   /**
-   * Deferred effects (which run after async work has completed) that are DIRTY
-   * @type {Set<Effect>}
+   * Deferred effects (which run after async work has completed) and their status (DIRTY or MAYBE_DIRTY)
+   * @type {Map<Effect, number>}
    */
-  #dirty_effects = /* @__PURE__ */ new Set();
-  /**
-   * Deferred effects that are MAYBE_DIRTY
-   * @type {Set<Effect>}
-   */
-  #maybe_dirty_effects = /* @__PURE__ */ new Set();
+  #dirty_reactions = /* @__PURE__ */ new Map();
   /**
    * A map of branches that still exist, but will be destroyed when this batch
    * is committed — we skip over these during `process`.
@@ -674,26 +669,30 @@ class Batch {
     if (last_batch === null) {
       first_batch = last_batch = this;
     } else {
-      last_batch.#next = this;
-      this.#prev = last_batch;
+      last_batch.next = this;
+      this.prev = last_batch;
     }
     last_batch = this;
   }
   #is_deferred() {
     if (this.is_fork) return true;
     for (const effect of this.#blocking_pending.keys()) {
-      var e = effect;
-      var skipped = false;
-      while (e.parent !== null) {
-        if (this.#skipped_branches.has(e)) {
-          skipped = true;
-          break;
-        }
-        e = e.parent;
-      }
-      if (!skipped) {
+      if (!this.#is_skipped(effect)) {
         return true;
       }
+    }
+    return false;
+  }
+  /**
+   * Whether `effect` is inside a branch that this batch skips
+   * @param {Effect} effect
+   */
+  #is_skipped(effect) {
+    for (var e = (
+      /** @type {Effect | null} */
+      effect
+    ); e !== null; e = e.parent) {
+      if (this.#skipped_branches.has(e)) return true;
     }
     return false;
   }
@@ -762,14 +761,9 @@ class Batch {
     return roots;
   }
   #process() {
-    this.#started = true;
-    for (const e of this.#dirty_effects) {
-      this.#maybe_dirty_effects.delete(e);
-      set_signal_status(e, DIRTY);
-      this.schedule(e);
-    }
-    for (const e of this.#maybe_dirty_effects) {
-      set_signal_status(e, MAYBE_DIRTY);
+    this.started = true;
+    for (const [e, status] of this.#dirty_reactions) {
+      set_signal_status(e, status);
       this.schedule(e);
     }
     this.apply();
@@ -819,8 +813,7 @@ class Batch {
       earlier_batch.#merge(this);
       return;
     }
-    this.#dirty_effects.clear();
-    this.#maybe_dirty_effects.clear();
+    this.#dirty_reactions.clear();
     for (const fn of this.#commit_callbacks) fn(this);
     this.#commit_callbacks.clear();
     previous_batch = this;
@@ -835,16 +828,6 @@ class Batch {
     );
     if (this.#pending === 0 && (this.#scheduled.length === 0 || next_batch !== null)) {
       this.#unlink();
-    }
-    if (this.#scheduled.length > 0) {
-      if (next_batch !== null) {
-        for (const e of this.#scheduled) {
-          next_batch.#scheduled.push(e);
-        }
-        this.#scheduled = [];
-      } else {
-        next_batch = this;
-      }
     }
     if (next_batch !== null) {
       old_values.clear();
@@ -872,7 +855,7 @@ class Batch {
         } else if ((flags2 & EFFECT) !== 0) {
           effects.push(effect);
         } else if (is_dirty(effect)) {
-          if ((flags2 & BLOCK_EFFECT) !== 0) this.#maybe_dirty_effects.add(effect);
+          if ((flags2 & BLOCK_EFFECT) !== 0) this.add_dirty_reaction(effect, MAYBE_DIRTY);
           update_effect(effect);
         }
         var child = effect.first;
@@ -892,18 +875,18 @@ class Batch {
     }
   }
   #find_earlier_batch() {
-    var batch = this.#prev;
-    while (batch !== null) {
-      if (!batch.is_fork) {
-        for (const [value, [, is_derived]] of this.current) {
-          if (batch.current.has(value) && !is_derived) {
-            return batch;
-          }
-        }
-      }
-      batch = batch.#prev;
+    for (var batch = this.prev; batch !== null; batch = batch.prev) {
+      if (!batch.is_fork && this.#intersects(batch)) return batch;
     }
     return null;
+  }
+  /** @param {Batch} batch */
+  #intersects(batch) {
+    for (const [source2, [, is_derived]] of this.current) {
+      if (is_derived) continue;
+      if (batch.current.has(source2)) return true;
+    }
+    return false;
   }
   /**
    * @param {Batch} batch
@@ -920,7 +903,7 @@ class Batch {
       if (d) deferred2.promise.then(d.resolve).catch(d.reject);
     }
     batch.async_deriveds.clear();
-    this.transfer_effects(batch.#dirty_effects, batch.#maybe_dirty_effects);
+    this.transfer_reactions(batch.#dirty_reactions);
     const mark = (value) => {
       var reactions = value.reactions;
       if (reactions === null) return;
@@ -940,7 +923,7 @@ class Batch {
             reaction
           );
           if (flags2 & (ASYNC | BLOCK_EFFECT) && !this.async_deriveds.has(effect)) {
-            this.#maybe_dirty_effects.delete(effect);
+            this.#dirty_reactions.delete(effect);
             set_signal_status(effect, DIRTY);
             this.schedule(effect);
           }
@@ -960,7 +943,7 @@ class Batch {
    */
   #defer_effects(effects) {
     for (var i = 0; i < effects.length; i += 1) {
-      defer_effect(effects[i], this.#dirty_effects, this.#maybe_dirty_effects);
+      defer_effect(effects[i], this.#dirty_reactions);
     }
   }
   /**
@@ -1022,7 +1005,7 @@ class Batch {
     this.#new_effects.push(effect);
   }
   #commit() {
-    for (let batch = first_batch; batch !== null; batch = batch.#next) {
+    for (let batch = first_batch; batch !== null; batch = batch.next) {
       var is_earlier = batch.id < this.id;
       var sources = [];
       for (const [source3, [value, is_derived]] of this.current) {
@@ -1049,7 +1032,7 @@ class Batch {
         (source3) => !/** @type {[any, boolean]} */
         batch.current.get(source3)[1]
       );
-      if (!batch.#started || current.length === 0) continue;
+      if (!batch.started || current.length === 0) continue;
       var others = current.filter((source3) => !this.current.has(source3));
       if (others.length === 0) {
         if (is_earlier) {
@@ -1086,7 +1069,7 @@ class Batch {
                 set_signal_status(effect, DIRTY);
                 batch.schedule(effect);
               } else {
-                batch.#dirty_effects.add(effect);
+                batch.add_dirty_reaction(effect, DIRTY);
               }
             }
           }
@@ -1136,18 +1119,22 @@ class Batch {
     });
   }
   /**
-   * @param {Set<Effect>} dirty_effects
-   * @param {Set<Effect>} maybe_dirty_effects
+   * @param {Map<Effect, number>} dirty_reactions
    */
-  transfer_effects(dirty_effects, maybe_dirty_effects) {
-    for (const e of dirty_effects) {
-      this.#dirty_effects.add(e);
+  transfer_reactions(dirty_reactions) {
+    for (const [effect, status] of dirty_reactions) {
+      this.add_dirty_reaction(effect, status);
     }
-    for (const e of maybe_dirty_effects) {
-      this.#maybe_dirty_effects.add(e);
+    dirty_reactions.clear();
+  }
+  /**
+   * @param {Effect} effect
+   * @param {number} status
+   */
+  add_dirty_reaction(effect, status) {
+    if (status === DIRTY || this.#dirty_reactions.get(effect) !== DIRTY) {
+      this.#dirty_reactions.set(effect, status);
     }
-    dirty_effects.clear();
-    maybe_dirty_effects.clear();
   }
   /** @param {(batch: Batch) => void} fn */
   oncommit(fn) {
@@ -1165,7 +1152,7 @@ class Batch {
       const batch = current_batch = new Batch();
       if (!is_processing && !is_flushing_sync) {
         queue_micro_task(() => {
-          if (!batch.#started) {
+          if (!batch.started) {
             batch.flush();
           }
         });
@@ -1193,17 +1180,17 @@ class Batch {
   }
   #unlink() {
     if (!this.linked) return;
-    var prev = this.#prev;
-    var next2 = this.#next;
+    var prev = this.prev;
+    var next2 = this.next;
     if (prev === null) {
       first_batch = next2;
     } else {
-      prev.#next = next2;
+      prev.next = next2;
     }
     if (next2 === null) {
       last_batch = prev;
     } else {
-      next2.#prev = prev;
+      next2.prev = prev;
     }
     this.linked = false;
   }
@@ -1359,7 +1346,6 @@ let eager_effects_deferred = false;
 function source(v, stack) {
   var signal = {
     f: 0,
-    // TODO ideally we could skip this altogether, but it causes type errors
     v,
     reactions: null,
     equals,
@@ -2304,10 +2290,8 @@ class Boundary {
   #local_pending_count = 0;
   #pending_count = 0;
   #pending_count_update_queued = false;
-  /** @type {Set<Effect>} */
-  #dirty_effects = /* @__PURE__ */ new Set();
-  /** @type {Set<Effect>} */
-  #maybe_dirty_effects = /* @__PURE__ */ new Set();
+  /** @type {Map<Effect, number>} */
+  #dirty_reactions = /* @__PURE__ */ new Map();
   /**
    * A source containing the number of pending async deriveds/expressions.
    * Only created if `$effect.pending()` is used inside the boundary,
@@ -2514,14 +2498,14 @@ class Boundary {
    */
   #resolve(batch) {
     this.is_pending = false;
-    batch.transfer_effects(this.#dirty_effects, this.#maybe_dirty_effects);
+    batch.transfer_reactions(this.#dirty_reactions);
   }
   /**
    * Defer an effect inside a pending boundary until the boundary resolves
    * @param {Effect} effect
    */
   defer_effect(effect) {
-    defer_effect(effect, this.#dirty_effects, this.#maybe_dirty_effects);
+    defer_effect(effect, this.#dirty_reactions);
   }
   /**
    * Returns `false` if the effect exists inside a boundary whose pending snippet is shown

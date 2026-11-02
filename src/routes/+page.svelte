@@ -1,5 +1,6 @@
 <script lang="ts">
-  import MarketSnapshot from '$lib/MarketSnapshot.svelte';
+  import MarketSnapshot from '../lib/MarketSnapshot.svelte';
+  import AIAnalysis from '../components/AIAnalysis.svelte';
 
   type Analysis = {
     signal?: string;
@@ -56,9 +57,13 @@
 
     <MarketSnapshot onPriceUpdate={(p) => { btcPrice = p; }} />
 
+    <!-- Existing Market Analysis Button -->
     <button class="analyze-btn" type="button" onclick={runAiAnalysis} disabled={analyzing}>
       {analyzing ? 'Analyzing with Jev...' : 'Run market analysis'}
     </button>
+
+    <!-- NEW: Agent Discussion Component Button placed directly below -->
+    <AIAnalysis />
 
     {#if analysisError}
       <p class="analysis-error" role="alert">{analysisError}</p>
@@ -77,45 +82,33 @@
     {/if}
   </section>
 
-
    <aside class="ai-disclosure" aria-label="AI and risk notice">
       <span class="disclosure-icon" aria-hidden="true">✦</span>
-
       <p>
         Educational market analysis only 
         — not financial advice. Cryptocurrency assets are volatile. 
         AI signals can be wrong; verify independently and use risk controls.
       </p>
-
     </aside>
 
-<footer class="footer">
-
-
-
+  <footer class="footer">
     <p class="technology-credit">Created with SvelteKit deployed on Firebase.</p>
-
-    
-
     <p class="creator-credit">
       © {new Date().getFullYear()} | Built by
       <a 
-                href="https://uspekhi.web.app" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                class="hover:underline text-blue-200 hover:text-blue-300"
-              >
-                <strong>USPEKHI</strong>
-              </a>
-              <br />
-              <a href="/privacy.html" target="_blank" rel="noopener noreferrer" class="hover:underline text-blue-200 hover:text-blue-300">
-                Privacy Policy
-              </a>
-
+        href="https://uspekhi.web.app" 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        class="hover:underline text-blue-200 hover:text-blue-300"
+      >
+        <strong>USPEKHI</strong>
+      </a>
+      <br />
+      <a href="/privacy.html" target="_blank" rel="noopener noreferrer" class="hover:underline text-blue-200 hover:text-blue-300">
+        Privacy Policy
+      </a>
     </p>
   </footer>
-
-
 </main>
 
 <style>
@@ -181,7 +174,7 @@
   .long { color: #4ade80; }
   .short { color: #f87171; }
 
-.ai-disclosure {
+  .ai-disclosure {
     display: flex;
     align-items: flex-start;
     gap: 0.8rem;
@@ -200,12 +193,7 @@
     text-align: left;
     overflow: hidden;
   }
-
-  .ai-disclosure p {
-    margin: 0;
-    color: #c7d6ea;
-  }
-
+  .ai-disclosure p { margin: 0; color: #c7d6ea; }
   .disclosure-icon {
     display: inline-flex;
     align-items: center;
@@ -216,13 +204,5 @@
     line-height: 1;
     filter: drop-shadow(0 0 8px rgba(129, 230, 238, 0.38));
   }
-
-  @media (max-width: 640px) {
-    .ai-disclosure {
-      gap: 0.6rem;
-      padding: 0.8rem 0.9rem;
-      border-radius: 16px;
-    }
-  }
-
+  .footer { margin-top: 2rem; color: #94a3b8; font-size: 0.85rem; }
 </style>

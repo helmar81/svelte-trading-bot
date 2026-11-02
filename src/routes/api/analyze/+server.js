@@ -1,6 +1,6 @@
 // src/routes/api/analyze/+server.js
 import { json } from '@sveltejs/kit';
-import { analyzeEntryWithJev, JevConfigurationError } from '#lib/server/jev.js';
+import { analyzeEntryWithJev, JevConfigurationError } from '../../../lib/server/jev.js';
 
 export async function POST() {
   try {

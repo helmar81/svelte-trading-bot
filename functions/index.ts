@@ -5,13 +5,16 @@ import { GoogleGenAI } from "@google/genai";
 const geminiApiKey = defineSecret("GEMINI_API_KEY");
 
 export const debateBitcoin = onRequest(
-  { secrets: [geminiApiKey] },
+  { 
+    secrets: [geminiApiKey],
+    cors: true // <-- ADD THIS LINE to allow localhost and web origins
+  },
   async (req, res) => {
     try {
       const ai = new GoogleGenAI({ apiKey: geminiApiKey.value() });
 
       const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
+        model: 'gemini-3.8-flash',
         contents: req.body.prompt || "Analyze current Bitcoin market setup.",
       });
 
